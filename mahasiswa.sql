@@ -43,7 +43,7 @@ select * from jurusan;
 
 -- untuk menambah data di tabel mahasiswa
 insert into mahasiswa (id_jurusan, nim, nama, jenis_kelamin,tempat_lahir,tanggal_lahir, alamat) values (1,"20317100", "Farah", "perempuan", "Mojokerto", "03-10-2002","Jl.Pisang no 2");
- insert into mahasiswa (id_jurusan, nim, nama, jenis_kelamin,tempat_lahir,tanggal_lahir, alamat) values (1,"20247100", "Kaka", "laki-laki", "Malang", "05-12-2002","Jl.Semangka no 10");
+insert into mahasiswa (id_jurusan, nim, nama, jenis_kelamin,tempat_lahir,tanggal_lahir, alamat) values (1,"20247100", "Kaka", "laki-laki", "Malang", "05-12-2002","Jl.Semangka no 10");
 
 -- untuk lihat data di tabel mahasiswa
 select * from mahasiswa;
