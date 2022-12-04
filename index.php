@@ -1,32 +1,31 @@
 <?php
-// buat koneksi dengan mySQL
+
+// 1. Buat koneksi dengan MySQL
 $con = mysqli_connect("localhost","root","","fakultas");
 
-//cek koneksi database
-if(mysqli_connect_errno()){
-    echo "koneksi gagal".mysqli_connect_error();
+// 2. Check connection
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
 }else{
-    echo "koneksi berhasil";
+    echo 'koneksi berhasil';
 }
 
-//membaca data dari tabel mySQL
-$query = "SELECT * FROM mahasiswa";
+// 3 buat query baca semua data dari table
+$sql = "SELECT * FROM mahasiswa";
 
-//menampilkan data, dengan menjalankan sql query
-$result = mysqli_query($con,$query);
-$mahasiswa=[];
-if ($result){
-    // tampilkan data satu per satu
-    while($row = mysqli_fetch_assoc($result)){
-        //echo "<br>".$row["nama"]." alamat : ".$row["alamat"];
-        $mahasiswa[]=$row;
+// 4. tampilkan data, cek apakah query bisa dijalankan
+$mahasiswa = [];
+if ($result = mysqli_query($con, $sql)) {
+    // tampilkan satu per satu
+    while ($row = mysqli_fetch_assoc($result)) {
+        $mahasiswa[] = $row;
     }
     mysqli_free_result($result);
-}
+  }
 
-//close koneksi mySQL 
+// 5. tutup koneksi
 mysqli_close($con);
-
 ?>
 
 <!DOCTYPE html>
@@ -38,10 +37,10 @@ mysqli_close($con);
     <title>Data Mahasiswa</title>
 </head>
 <body>
-    <h1> Data Mahasiswa </h1>
-    <table border="1" style="width:100%;">
+    <h1>Data Mahasiswa</h1>
+    <a href="insert.php">Tambah Data</a>
+    <table border=1 style="width: 100%;">
         <tr>
-            <th>Id Jurusan</th>
             <th>NIM</th>
             <th>Nama</th>
             <th>Jenis Kelamin</th>
@@ -50,18 +49,19 @@ mysqli_close($con);
             <th>Alamat</th>
             <th>Action</th>
         </tr>
-        <?php foreach($mahasiswa as $value): ?>
-        <tr>
-            <td><?php echo $value["id_jurusan"]; ?></td>
-            <td><?php echo $value["nim"]; ?></td>
-            <td><?php echo $value["nama"]; ?></td>
-            <td><?php echo $value["jenis_kelamin"]; ?></td>
-            <td><?php echo $value["tempat_lahir"]; ?></td>
-            <td><?php echo $value["tanggal_lahir"]; ?></td>
-            <td><?php echo $value["alamat"]; ?></td>
-            
-        </tr>
-        
+        <?php foreach ($mahasiswa as $row): ?>
+            <tr>
+                <td><?= $row['nim'] ?></td>
+                <td><?= $row['nama'] ?></td>
+                <td><?= $row['jenis_kelamin'] ?></td>
+                <td><?= $row['tempat_lahir'] ?></td>
+                <td><?= $row['tanggal_lahir'] ?></td>
+                <td><?= $row['alamat'] ?></td>
+                <td>
+                    <a href="update.php?id=<?= $row['id'] ?>" >Edit</a> | 
+                    <a href="delete.php?id=<?= $row['id'] ?>" >Delete</a>
+                </td>
+            </tr>
         <?php endforeach; ?>
     </table>
 </body>
